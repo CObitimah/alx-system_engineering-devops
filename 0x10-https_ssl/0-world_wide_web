@@ -1,35 +1,23 @@
 #!/usr/bin/env bash
-# This script displays information about subdomains
+# A Bash script that will display information about subdomains.
 
-get_subdomain_info() {
-	local domain="$1"
-	local subdomain="$2"
-	record_info=$(dig +short "${subdomain}"."${domain}")
-	
-	if [ -z "$record_info" ]; then
-		echo "The subdomain ${subdomain}.${domain} does not exist."
-		return
-	fi
-
-	local record_type="A"
-	echo "The subdomain ${subdomain} is a ${record_type} record and points to ${record_info}"
+get_info() {
+   if [ "$#" -eq 2 ]; then
+      domain="$1"
+      subdomain="$2"
+      record=$(dig "$subdomain"."$domain" | awk '/;; ANSWER SECTION:/{getline; print $4}')
+      destination_ip=$(dig "$subdomain"."$domain" | awk '/;; ANSWER SECTION:/{getline; print $5}')
+      echo "The subdomain ${subdomain} is a ${record} record and points to ${destination_ip}"
+   else
+       domain="$1"
+       subdomains=("www" "lb-01" "web-01" "web-02")
+       for subdomain in "${subdomains[@]}"; do
+           record=$(dig "${subdomain}"."$domain" | awk '/;; ANSWER SECTION:/{getline; print $4}')
+           destination_ip=$(dig "${subdomain}"."$domain" | awk '/;; ANSWER SECTION:/{getline; print $5}')
+           echo "The subdomain ${subdomain} is a ${record} record and points to ${destination_ip}"
+       done
+   fi
 }
 
-
-#Main script
-domain="$1"
-subdomain="$2"
-
-if [ -z "$subdomain" ]; then
-	echo "Usage: $0 domain [subdomain]"
-	exit 1
-fi
-
-if [ -z "$subdomain" ]; then
-	subdomains=("www" "lb-01" "web-01" "web-02")
-	for sub in "${subdomains[@]}"; do
-		get_subdomain_info "$domain" "$sub"
-	done
-else
-	get_subdomain_info "$domain" "$subdomain"
-fi
+# fucntion call
+get_info "$@"
