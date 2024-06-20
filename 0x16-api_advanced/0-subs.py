@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""0-subs module."""
+"""
+0-subs module.
+"""
 import requests
 
 
@@ -9,17 +11,12 @@ def number_of_subscribers(subreddit):
     """
     # The address where we ask about the book.
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
-
-    # Our introduction to Reddit so they know who's calling.
     headers = {'User-Agent': 'Mozilla/5.0'}
 
     try:
-        # We make the call to Reddit.
-        reponse = requests.get(url, headers=headers, allow_redirrects=False)
-
-        # If Reddit says "I know this book":
-        if reponse.status_code == 200:
-            data = reponse.json()
+        response = requests.get(url, headers=headers, allow_redirects=False)
+        if response.status_code == 200:
+            data = response.json()
             return data['data']['subscribers']
         else:
             return 0
