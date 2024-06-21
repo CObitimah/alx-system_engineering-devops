@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# update and install nginx silently using -y flag
+
+sudo apt-get -y update
+sudo apt-get install -y nginx
+
+# Cofigure nginx to listen to port 80 and then  return Hello World! at the root
+
+sudo ufw allow 'Nginx HTTP'
+
+echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
+
+# Restart the nginx server
+sudo service nginx restart
