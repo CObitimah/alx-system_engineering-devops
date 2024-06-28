@@ -1,15 +1,5 @@
 #!/usr/bin/env bash
-sudo apt update
-
-sudo apt install -y nginx
-
-sudo systemctl enable nginx
-sudo systemctl start nginx
-
-sudo nginx -t
-
-sudo systemctl restart nginx
-
-sudo systemctl status nginx
-
-echo "Nginx installation and configuration completed."
+# This script fixes the issue of nginx not running at port 80
+rm -f /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx start
