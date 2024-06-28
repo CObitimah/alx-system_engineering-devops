@@ -1,4 +1,15 @@
 #!/usr/bin/env bash
-rm -f /etc/nginx/sites-enabled/default
-li -s /etc/ngnix/sites-available/default /etc/ngnix/sites-enabled/default
-service nginx start
+sudo apt update
+
+sudo apt install -y nginx
+
+sudo systemctl enable nginx
+sudo systemctl start nginx
+
+sudo nginx -t
+
+sudo systemctl restart nginx
+
+sudo systemctl status nginx
+
+echo "Nginx installation and configuration completed."
