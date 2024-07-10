@@ -1,18 +1,5 @@
-# Puppet manifest to optimize Ngnix configuration
+# 0-the_sky_is_the_limit_not.pp
+# This Puppet manifest includes the nginx_optimization class to optimize the Nginx configuration.
 
-class nginx_config {
-    file { '/etc/nginx/nginx.conf':
-        ensure  => file,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        content => template('nginx/nginx.conf.erb'),
-        notify  => Service['nginx'],
-    }
-}
+include web_stack_debugging_4::nginx_optimization
 
-service { 'nginx':
-    ensure  => running,
-    enable  => true,
-    require => Class['nginx_config'],
-}
