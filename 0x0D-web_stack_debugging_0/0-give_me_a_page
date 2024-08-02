@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# This script sets up Apache to serve a Hello Holberton page.
+
+# Update package list and install Apache and curl
+apt-get update
+apt-get install -y apache2 curl
+
+# Set ServerName to avoid warning
+echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Start Apache
+service apache2 start
+
+# Create the "Hello Holberton" page
+echo "Hello Holberton" > /var/www/html/index.html
+
+# Restart Apache to apply the changes
+service apache2 restart
+
+# Verify Apache is listening on port 0.8080
+ss -tuln | grep :0.8080
