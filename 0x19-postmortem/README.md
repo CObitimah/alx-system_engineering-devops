@@ -1,6 +1,11 @@
 Postmortem: Web Service Outage on [Date]
 ========================================
 
+#Humor
+Title: The Curious Case of the Missing Connections: How Our API Took an Unexpected Nap.
+
+Introduction: So we thought, until our API decided it was a time to go on a coffee break--without telling anyone!
+
 #Issue Summary
 Duration of Outage:
 Start: August 18, 2024, 10:30 AM GMT
